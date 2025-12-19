@@ -1,0 +1,134 @@
+Project: Super-Drone (Prototype)
+
+Overview
+- Small prototype drone using an ESP32-based flight computer. Initial prototype implements basic sensor fusion and altitude estimation. Designed for manual assembly (soldered components, 3D-printed frame) and future upgrades (motors, cameras, advanced flight components).
+
+Goals
+- Demonstrate stable hover and basic attitude control using onboard sensors and a PID controller.
+- Provide a minimal, extensible software and hardware baseline for future expansion.
+
+Scope (Prototype)
+- Hardware: ESP32 flight computer, MPU6050 IMU, BME280 barometric/temperature/humidity sensor, small motors, propellers, 3D printed frame; manual soldering and wiring.
+- Software: Sensor acquisition, simple sensor fusion (IMU + barometer), altitude estimation, PID-based attitude/altitude controller, servo control, basic abort/emergency stop routine.
+
+Hardware List (Minimum for Prototype)
+- Flight computer: ESP32 (development module or equivalent)
+- IMU: MPU6050 (accelerometer + gyroscope)
+- Barometer / environmental sensor: BME280 (pressure → altitude, temperature, humidity)
+- Actuators: Small brushless/DC motors (prototype-appropriate), ESCs or driver circuits, or micro servos for control surfaces if applicable
+- Propellers sized to motors
+- Power: Battery (LiPo recommended) and power distribution (regulators as needed)
+- Frame: 3D-printed structural parts, mounts, and fasteners
+- Assembly: Hand-soldered connections, wires, connectors, heatshrink
+- Safety: Propeller guards (recommended for testing), kill-switch or accessible power disconnect
+
+Software List (Minimum for Prototype)
+- Flight stack: Firmware running on `ESP32` that:
+	- Reads raw sensor data from `MPU6050` and `BME280` over I2C
+	- Runs a basic sensor-fusion algorithm (complementary filter or simple Kalman) for attitude estimation
+	- Estimates altitude using barometric data and optionally fused IMU integration
+	- Implements PID controllers for roll, pitch, yaw and altitude
+	- Provides actuator output to motors/servos (PWM/ESC protocols)
+	- Implements an emergency abort/kill routine that stops motors safely
+- Utilities: I2C scanner and sensor test sketches, logging/debug output over serial
+- Development: Build scripts and instructions for flashing onto ESP32, basic telemetry/serial monitor
+
+Functional Requirements
+- FR1: The system shall sample IMU (MPU6050) and barometer (BME280) at rates sufficient for closed-loop control (IMU ≥ 200 Hz recommended; barometer as available).
+- FR2: The system shall compute roll, pitch, and yaw using sensor fusion.
+- FR3: The system shall estimate altitude from barometer (and optionally IMU) and provide altitude feedback to the controller.
+- FR4: The system shall run PID loops controlling attitude and altitude with tunable gains.
+- FR5: The system shall command motor/servo outputs and provide a safe stop (abort) mechanism.
+- FR6: The system shall provide serial telemetry for debugging (sensor readings, estimated states, controller outputs).
+
+Non-Functional Requirements
+- NFR1: Firmware must fit and run reliably on ESP32 with available RAM/flash for the prototype features.
+- NFR2: System must be testable on a bench with props removed and in a restrained test rig before free flight.
+- NFR3: Documentation must include wiring diagrams, pin mappings, build/flash steps, and basic tuning guidance for PID gains.
+
+Constraints and Assumptions
+- Prototype will be manually soldered and assembled; reliability expectations are limited compared to production assemblies.
+- No autopilot-level navigation is required for initial prototype — only basic attitude/altitude control.
+- Communications beyond serial (e.g., RC link, telemetry radios) are optional for first-pass prototype.
+
+Safety and Abort
+- An accessible hard power disconnect and software abort (motor shutoff) must be available.
+- During testing, propellers should be removed or the vehicle restrained until basic control is verified.
+
+Testing and Validation
+- Unit tests: sensor readout validation (I2C scanner, MPU6050/BME280 validation sketches).
+- Integration tests: sensor fusion correctness (compare IMU-derived attitude vs expected orientations), PID response tests on a test rig.
+- Flight test plan: tethered hover tests, short elevation bursts, PID tuning iterations; log results.
+
+Simulation
+- Purpose: validate dynamics, sensor models, and controller behavior before physical assembly; shorten iteration loop and reduce risk.
+- Recommended tools: MATLAB/Simulink (Aerospace/Simulink toolboxes) for control-focused simulation; Gazebo/ROS or PX4 SITL for full-stack and HIL-style tests; Python (NumPy/SciPy) for lightweight dynamic prototypes.
+Project: Super-Drone (Prototype)
+
+Goals & Basic Requirements
+- Goals:
+	- Achieve stable hover and basic attitude control (roll, pitch, yaw) with PID control.
+	- Provide a minimal, extensible baseline for future upgrades (motors, cameras, autonomy).
+- Basic requirements:
+	- Read IMU and barometer sensors and run sensor fusion for attitude and altitude estimation.
+	- Run PID controllers for attitude and altitude with tunable gains and telemetry output.
+	- Provide safe abort (software kill) and bench/test modes before free flight.
+
+Hardware
+- Core components (prototype minimum):
+	- Flight computer: ESP32 development module.
+	- IMU: MPU6050 (accelerometer + gyroscope) on I2C.
+	- Barometric sensor: BME280 (pressure/temperature/humidity) on I2C for altitude estimation.
+	- Actuators: small motors + ESCs or micro servos (depending on frame), propellers sized to motors.
+	- Power: LiPo battery, power distribution, and required regulators.
+	- Frame: 3D-printed parts, mounts, fasteners; hand-soldered wiring and connectors.
+	- Safety: accessible power disconnect, kill-switch, prop guards for bench testing.
+- Hardware notes:
+	- Keep wiring and grounding tidy; use common ground and decoupling near power inputs.
+	- Provide clearly documented pin mapping for ESP32 I2C, PWM, and power pins.
+
+Software
+- Required features:
+	- Sensor drivers: robust I2C routines for `MPU6050` and `BME280` with error handling and simple calibration routines.
+	- Sensor fusion: lightweight complementary filter or simple Kalman/EKF for roll/pitch/yaw estimation.
+	- Altitude estimation: barometer-based altitude with optional short-term IMU fusion.
+	- Control: PID controllers for roll, pitch, yaw, and altitude with gain parameters and runtime tuning hooks.
+	- Actuation: PWM/ESC output layer and safe motor/servo arming/disarming sequence.
+	- Safety: software abort/kill and bench mode (motors disabled) for testing.
+	- Telemetry & debug: serial logging of sensor values, estimated states, and controller outputs; optional simple RC/telemetry integration later.
+- Performance expectations:
+	- IMU loop: target reading & control update at ~200 Hz (or as hardware permits).
+	- Barometer: lower-rate updates (e.g., 25–50 Hz) fused into altitude estimator.
+- Development utilities:
+	- I2C scanner and individual sensor test sketches.
+	- Flashing instructions and a simple serial monitor setup for telemetry.
+
+Simulation
+- Purpose: validate dynamics, sensor models, and controller behavior before building hardware.
+- Recommended tools and approaches:
+	- MATLAB/Simulink for control-design and rapid PID tuning.
+	- Gazebo/ROS or PX4 SITL for system-level testing (optional, heavier setup).
+	- Python (NumPy/SciPy) notebooks for small dynamics experiments and Monte Carlo tests.
+- Minimal simulation models to implement:
+	- 6-DOF rigid-body dynamics (mass, inertias) and simple motor thrust models.
+	- Sensor models approximating `MPU6050` noise/bias and `BME280` pressure noise/update rate.
+	- Disturbances: gravity, simple wind/gust models for robustness checks.
+- Workflows and deliverables:
+	- Controller-in-the-loop: run the PID controller against the dynamics model to generate initial gain values.
+	- Parameter sweeps: vary mass, CG, sensor noise, and latency to check robustness and failure cases.
+	- Deliverables: model scripts or Simulink files, initial PID gain suggestions, and plots showing attitude/altitude responses.
+- MATLAB quick notes:
+	- Use a fixed-step solver matched to controller rate (e.g., 1/200 s).
+	- Implement sensor sampling/aliasing and simple bias/noise models to get realistic data for controller tuning.
+
+Minimal Acceptance Criteria
+- Bench: sensors report plausible values and fusion produces stable attitude output while stationary.
+- Bench: PID loops run in bench mode without motors and produce stable controller outputs.
+- Tethered test: vehicle responds predictably to command inputs and can maintain brief, controlled hover under supervision.
+
+Next steps
+- Provide wiring diagram and ESP32 pin mapping.
+- Optionally: add a MATLAB example or Python notebook for dynamics — specify preference.
+
+Revision: v0.2 — simplified sections focusing on Goals, Hardware, Software, and Simulation.
+
