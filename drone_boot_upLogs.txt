@@ -1,0 +1,98 @@
+ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:7084
+ho 0 tail 12 room 4
+load:0x40078000,len:15576
+ho 0 tail 12 room 4
+load:0x40080400,len:4
+load:0x40080404,len:3876
+entry 0x4008064c
+I (32) boot: ESP-IDF v5.1-dirty 2nd stage bootloader
+I (32) boot: compile time Aug  2 2026 15:59:39
+I (33) boot: Multicore bootloader
+I (37) boot: chip revision: v1.0
+I (41) boot.esp32: SPI Speed      : 40MHz
+I (45) boot.esp32: SPI Mode       : DIO
+I (50) boot.esp32: SPI Flash Size : 2MB
+I (54) boot: Enabling RNG early entropy source...
+I (60) boot: Partition Table:
+I (63) boot: ## Label            Usage          Type ST Offset   Length
+I (71) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (78) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (86) boot:  2 factory          factory app      00 00 00010000 00100000
+I (93) boot: End of partition table
+I (97) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=0be70h ( 48752) map
+I (123) esp_image: segment 1: paddr=0001be98 vaddr=3ffb0000 size=02188h (  8584) load
+I (127) esp_image: segment 2: paddr=0001e028 vaddr=40080000 size=01ff0h (  8176) load
+I (133) esp_image: segment 3: paddr=00020020 vaddr=400d0020 size=22e04h (142852) map
+I (189) esp_image: segment 4: paddr=00042e2c vaddr=40081ff0 size=0b7c8h ( 47048) load
+I (216) boot: Loaded app from partition at offset 0x10000
+I (216) boot: Disabling RNG early entropy source...
+I (227) cpu_start: Multicore app
+I (228) cpu_start: Pro cpu up.
+I (228) cpu_start: Starting app cpu, entry point is 0x40081224
+I (0) cpu_start: App cpu up.
+I (246) cpu_start: Pro cpu start user code
+I (246) cpu_start: cpu freq: 160000000 Hz
+I (246) cpu_start: Application information:
+I (251) cpu_start: Project name:     SuperDrone
+I (256) cpu_start: App version:      83b2b5c-dirty
+I (261) cpu_start: Compile time:     Aug  2 2026 15:59:34
+I (267) cpu_start: ELF file SHA256:  50163f8f8a6172a6...
+I (273) cpu_start: ESP-IDF:          v5.1-dirty
+I (278) cpu_start: Min chip rev:     v0.0
+I (283) cpu_start: Max chip rev:     v3.99
+I (288) cpu_start: Chip rev:         v1.0
+I (293) heap_init: Initializing. RAM available for dynamic allocation:
+I (300) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (306) heap_init: At 3FFB2AC8 len 0002D538 (181 KiB): DRAM
+I (312) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (319) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (325) heap_init: At 4008D7B8 len 00012848 (74 KiB): IRAM
+I (333) spi_flash: detected chip: generic
+I (336) spi_flash: flash io: dio
+W (340) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (354) app_start: Starting scheduler on CPU0
+I (358) app_start: Starting scheduler on CPU1
+I (358) main_task: Started on CPU0
+I (368) main_task: Calling app_main()
+I (371) main: Pre-Hal flight controller starting...
+I (378) mpu6050: MPU6050 found (WHO_AM_I=0x68)
+I (1392) main: gyro bias: x=-0.0283 y=+0.0040 z=+0.0167 rad/s
+Flight controller ready. Type 'help' for commands.
+Command task ready. Type 'help' for commands.
+I (1396) main: Entered control task
+> I (1397) main_task: Returned from app_main()
+I (1397) main: Entered telemetry task
+FC armed=0 roll=-0.0 pitch=+0.1 thr=992 motors=1000/1000/1000/1000
+FC armed=0 roll=-0.7 pitch=+7.2 thr=486 motors=1000/1000/1000/1000
+FC armed=0 roll=-0.7 pitch=+7.2 thr=0 motors=1000/1000/1000/1000
+FC armed=0 roll=-0.7 pitch=+7.2 thr=0 motors=1000/1000/1000/1000
+FC armed=0 roll=-0.7 pitch=+7.3 thr=0 motors=1000/1000/1000/1000
+FC armed=0 roll=-0.7 pitch=+7.2 thr=0 motors=1000/1000/1000/1000
+FC armed=0 roll=-0.7 pitch=+7.2 thr=0 motors=1000/1000/1000/1000
+FC armed=0 roll=-0.7 pitch=+7.2 thr=0 motors=1000/1000/1000/1000
+FC armed=0 roll=-0.7 pitch=+7.2 thr=0 motors=1000/1000/1000/1000
+I (9584) flight_controller: armed=1
+ARMED
+FC armed=1 roll=+0.0 pitch=+0.1 thr=576 motors=1000/1000/1000/1000
+FC armed=1 roll=-0.0 pitch=-0.0 thr=76 motors=1000/1000/1000/1000
+FC armed=1 roll=+0.0 pitch=+0.0 thr=0 motors=1000/1000/1000/1000
+FC armed=1 roll=-0.0 pitch=+0.0 thr=0 motors=1000/1000/1000/1000
+FC armed=1 roll=-0.0 pitch=+0.0 thr=0 motors=1000/1000/1000/1000
+FC armed=1 roll=+0.0 pitch=+0.0 thr=0 motors=1000/1000/1000/1000
+FC armed=1 roll=+0.0 pitch=+0.0 thr=0 motors=1000/1000/1000/1000
+throttle target 1200 us
+FC armed=1 roll=+0.0 pitch=+0.0 thr=196 motors=1000/1000/1000/1000
+FC armed=1 roll=+0.0 pitch=+0.0 thr=696 motors=1000/1000/1000/1000
+FC armed=1 roll=+0.0 pitch=+0.0 thr=1196 motors=1209/1184/1182/1207
+FC armed=1 roll=+0.0 pitch=+0.0 thr=1200 motors=1217/1184/1182/1215
+FC armed=1 roll=+0.0 pitch=+0.0 thr=1200 motors=1216/1199/1183/1200
+roll sp 15.0 deg
+FC armed=1 roll=-0.0 pitch=+0.0 thr=1200 motors=1461/1000/1000/1438
+FC armed=1 roll=-0.0 pitch=+0.0 thr=1200 motors=1454/1000/1000/1446
+FC armed=1 roll=+0.0 pitch=+0.0 thr=1200 motors=1453/1000/1000/1447
